@@ -16,6 +16,8 @@ qt_add_executable(OverteLauncher
     downloadprogressdialog.h downloadprogressdialog.cpp downloadprogressdialog.ui
     s3bucketfilter.h s3bucketfilter.cpp
     constants.h
+    installedlistmodel.h installedlistmodel.cpp
+    installedversion.h installedversion.cpp
 )
 
 qt_add_translations(

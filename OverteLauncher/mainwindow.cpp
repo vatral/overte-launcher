@@ -14,6 +14,23 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    _sortModel.setSourceModel(&_model);
+
+    ui->installedVersions->setModel(&_sortModel);
+    ui->installedVersions->setRootIsDecorated(false);
+    ui->installedVersions->setAlternatingRowColors(true);
+    ui->installedVersions->setUniformRowHeights(true);
+
+    ui->installedVersions->setSortingEnabled(true);
+    ui->installedVersions->sortByColumn(DownloadListModel::Date, Qt::DescendingOrder);
+
+    ui->installedVersions->header()->setStretchLastSection(false);
+    ui->installedVersions->header()->setSectionResizeMode(DownloadListModel::Description, QHeaderView::Stretch);
+    ui->installedVersions->header()->setSectionResizeMode(DownloadListModel::Date, QHeaderView::ResizeToContents);
+    ui->installedVersions->header()->setSectionResizeMode(DownloadListModel::Size, QHeaderView::ResizeToContents);
+
+    emit updateInstalledVersions();
 }
 
 MainWindow::~MainWindow()
@@ -51,4 +68,10 @@ void MainWindow::showDownloadListDialog()
     });
 
     dlg->show();
+}
+
+void MainWindow::updateInstalledVersions()
+{
+    _installedVersions = InstalledVersion::findInstalledVersions();
+    _model.setEntries(_installedVersions);
 }
