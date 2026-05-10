@@ -53,12 +53,24 @@ public:
     static QList<InstalledVersion> findInstalledVersions();
 
 
+
 private:
     InstalledVersion();
 
+
     QString _description;
+    QString _fullBinaryPath;
     QDateTime _date;
     quint64 _size;
 };
+
+inline QDebug& operator<<(QDebug &debug, const InstalledVersion &data) {
+        debug.nospace() << "InstalledVersion(description=" << data.getDescription()
+                        << ", date=" << data.getDate().toString(Qt::ISODate)
+                        << ", size=" << data.getSize()
+                        << ")";
+
+    return debug.space();
+}
 
 #endif // INSTALLEDVERSION_H
