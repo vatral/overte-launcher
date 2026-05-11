@@ -1,5 +1,6 @@
 #include <QDir>
 #include <QStandardPaths>
+#include <QProcess>
 
 #include "installedversion.h"
 
@@ -8,8 +9,8 @@ Q_LOGGING_CATEGORY(InstalledVersionLog, "InstalledVersion")
 
 InstalledVersion::InstalledVersion() {}
 
-bool InstalledVersion::launch(const QStringList arguments) {
-    return false;
+bool InstalledVersion::launch(const QStringList arguments, bool startDetached) {
+
 }
 
 QList<InstalledVersion> InstalledVersion::findInstalledVersions() {
@@ -41,6 +42,7 @@ QList<InstalledVersion> InstalledVersion::findInstalledVersions() {
         version._description = file.completeBaseName();
         version._date = file.birthTime();
         version._size = file.size();
+        version._fullBinaryPath = file.absoluteFilePath();
 
         versions.append(version);
     }

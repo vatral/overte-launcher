@@ -144,8 +144,59 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>launchButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>launchSelected()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1355</x>
+     <y>638</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>815</x>
+     <y>341</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>reportBugButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>reportBug()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>275</x>
+     <y>638</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>815</x>
+     <y>341</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>communityButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>goToCommunity()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>815</x>
+     <y>638</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>815</x>
+     <y>341</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showDownloadListDialog()</slot>
+  <slot>goToCommunity()</slot>
+  <slot>launchSelected()</slot>
+  <slot>reportBug()</slot>
  </slots>
 </ui>

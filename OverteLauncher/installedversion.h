@@ -39,11 +39,15 @@ public:
         return _size;
     }
 
+    const QString &getFullBinaryPath() const {
+        return _fullBinaryPath;
+    }
+
     /**
      * @brief Launch this version of Overte.
      * @return
      */
-    bool launch(const QStringList arguments = QStringList());
+    bool launch(const QStringList arguments = QStringList(), bool startDetached = false);
 
     /**
      * @brief Find all the installed versions of Overte on this system.

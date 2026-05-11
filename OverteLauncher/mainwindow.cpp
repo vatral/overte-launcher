@@ -75,3 +75,47 @@ void MainWindow::updateInstalledVersions()
     _installedVersions = InstalledVersion::findInstalledVersions();
     _model.setEntries(_installedVersions);
 }
+
+void MainWindow::launchSelected()
+{
+    auto current = getSelectedVersion();
+    if (!current) {
+        return;
+    }
+
+    _runner.runProgram(current->getFullBinaryPath(), QStringList(), false);
+}
+
+void MainWindow::reportBug()
+{
+
+}
+
+void MainWindow::goToCommunity()
+{
+
+}
+
+std::optional<InstalledVersion> MainWindow::getSelectedVersion() const
+{
+
+    auto proxy_idx = ui->installedVersions->currentIndex();
+    auto *proxy = qobject_cast<QSortFilterProxyModel*>(ui->installedVersions->model());
+
+    if (!ui->installedVersions->selectionModel()->selectedIndexes().isEmpty()) {
+        auto first = ui->installedVersions->selectionModel()->selectedIndexes().first();
+        qInfo() << "First selected item:" << first;
+
+        auto source_first = proxy->mapToSource(first);
+        qInfo() << "Mapped to source:" << source_first;
+
+        if (source_first.isValid()) {
+            auto ver = _installedVersions.at(source_first.row());
+            qInfo() << "Selected file:" << ver;
+            return ver;
+        }
+
+    }
+
+    return {};
+}

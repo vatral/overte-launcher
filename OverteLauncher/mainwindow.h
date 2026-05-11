@@ -6,6 +6,7 @@
 
 #include "installedversion.h"
 #include "installedlistmodel.h"
+#include "programrunner.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,11 +24,17 @@ public:
 public slots:
     void showDownloadListDialog();
     void updateInstalledVersions();
+    void launchSelected();
+    void reportBug();
+    void goToCommunity();
+
+    std::optional<InstalledVersion> getSelectedVersion() const;
 
 private:
     QList<InstalledVersion> _installedVersions;
     InstalledListModel _model;
     InstalledListProxyModel _sortModel;
+    ProgramRunner _runner;
 
     Ui::MainWindow *ui;
 };
