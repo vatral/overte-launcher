@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(OverteLauncher LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets LinguistTools Network Xml)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets LinguistTools Network Xml WebEngineWidgets)
 
 qt_standard_project_setup()
 
@@ -38,6 +38,7 @@ target_link_libraries(OverteLauncher
         Qt::Widgets
         Qt::Network
         Qt::Xml
+        Qt::WebEngineWidgets
 )
 
 install(TARGETS OverteLauncher

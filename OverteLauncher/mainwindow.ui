@@ -61,7 +61,7 @@
           <item>
            <widget class="QPushButton" name="addMoreButton">
             <property name="text">
-             <string>Add more</string>
+             <string>Download</string>
             </property>
            </widget>
           </item>
@@ -73,13 +73,19 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QLabel" name="label_3">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>Debug options</string>
+           <string>Changes</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QListWidget" name="listWidget_2"/>
+         <widget class="QTextBrowser" name="changelogTextBrowser"/>
         </item>
        </layout>
       </item>
@@ -98,6 +104,13 @@
        <widget class="QPushButton" name="communityButton">
         <property name="text">
          <string>Community</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="launchWithOptionsButton">
+        <property name="text">
+         <string>Launch with options</string>
         </property>
        </widget>
       </item>

@@ -3,10 +3,14 @@
 
 #include <QMainWindow>
 #include <QList>
+#include <QNetworkAccessManager>
+#include <QLoggingCategory>
 
 #include "installedversion.h"
 #include "installedlistmodel.h"
 #include "programrunner.h"
+
+Q_DECLARE_LOGGING_CATEGORY(MainWindowLog)
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,6 +31,7 @@ public slots:
     void launchSelected();
     void reportBug();
     void goToCommunity();
+    void loadChangelog();
 
     std::optional<InstalledVersion> getSelectedVersion() const;
 
@@ -35,6 +40,7 @@ private:
     InstalledListModel _model;
     InstalledListProxyModel _sortModel;
     ProgramRunner _runner;
+    QNetworkAccessManager _networkManager;
 
     Ui::MainWindow *ui;
 };

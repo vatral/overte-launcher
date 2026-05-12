@@ -7,6 +7,7 @@
 Q_DECLARE_LOGGING_CATEGORY(InstalledVersionLog)
 
 
+
 /**
  * @brief Installed Overte version
  * This class contains the information about an Overte install.

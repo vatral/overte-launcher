@@ -7,7 +7,9 @@
 #include "ui_mainwindow.h"
 #include "downloadlistdialog.h"
 #include "downloadprogressdialog.h"
+#include "constants.h"
 
+Q_LOGGING_CATEGORY(MainWindowLog, "MainWindow")
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -30,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->installedVersions->header()->setSectionResizeMode(DownloadListModel::Date, QHeaderView::ResizeToContents);
     ui->installedVersions->header()->setSectionResizeMode(DownloadListModel::Size, QHeaderView::ResizeToContents);
 
+    //ui->changelogWebView->setUrl(CHANGELOG_URL);
+
+    loadChangelog();
     emit updateInstalledVersions();
 }
 
@@ -94,6 +99,37 @@ void MainWindow::reportBug()
 void MainWindow::goToCommunity()
 {
 
+}
+
+void MainWindow::loadChangelog()
+{
+    QNetworkRequest req(CHANGELOG_URL);
+
+    qCInfo(MainWindowLog) << "Loading from" << req.url();
+
+    QNetworkReply *reply = _networkManager.get(req);
+
+
+    QObject::connect(reply, &QNetworkReply::downloadProgress, [this](qint64 bytesReceived, qint64 bytesTotal) {
+        qCInfo(MainWindowLog) << "Downloading" << bytesReceived << "of" << bytesTotal;
+    });
+
+    QObject::connect(reply, &QNetworkReply::errorOccurred, [this](QNetworkReply::NetworkError code){
+        qCInfo(MainWindowLog) << "Error" << code;
+    });
+
+    QObject::connect(reply, &QNetworkReply::finished, [this, reply]() {
+        qCInfo(MainWindowLog) << "Download finished";
+        auto text = reply->readAll();
+
+        ui->changelogTextBrowser->setMarkdown(text);
+
+    });
+
+
+    QObject::connect(reply, &QNetworkReply::sslErrors, [this](const QList<QSslError> &errors) {
+        qCInfo(MainWindowLog) << "SSL Error" << errors;
+    });
 }
 
 std::optional<InstalledVersion> MainWindow::getSelectedVersion() const
