@@ -35,7 +35,7 @@ private:
     QNetworkAccessManager _networkManager;
     QFile _outputFile;
     QString _filename;
-    S3BucketLister::FileData _data;
+    std::optional<S3BucketLister::FileData> _data;
 };
 
 #endif // DOWNLOADPROGRESSDIALOG_H

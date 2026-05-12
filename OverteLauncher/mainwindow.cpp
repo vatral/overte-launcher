@@ -53,7 +53,7 @@ void MainWindow::showDownloadListDialog()
         }
         downloadDir.cd("downloads");
 
-        QString path = downloadDir.absoluteFilePath(QFileInfo(selectedFile.fileName).fileName());
+        QString path = downloadDir.absoluteFilePath(QFileInfo(selectedFile->fileName).fileName());
 
         qInfo() << "Selected file   : " << selectedFile;
         qInfo() << "Downloading into: " << path;
@@ -63,7 +63,7 @@ void MainWindow::showDownloadListDialog()
         dlg->setAttribute(Qt::WA_DeleteOnClose);
         dlg->setModal(true);
         dlg->show();
-        dlg->startDownload(selectedFile, path);
+        dlg->startDownload(selectedFile.value(), path);
 
     });
 

@@ -23,28 +23,22 @@ class S3BucketLister : public QObject
 {
     Q_OBJECT
 public:
-    struct FileData {
+    class FileData {
+    public:
+
         QUrl baseUrl;
         QString fileName;
         QDateTime lastModified;
         qint64 size;
-
-        /**
-         * @brief Whether this item is valid
-         * Used when empty items are possible
-         * @return
-         */
-        bool isValid() const {
-            return !(fileName.isEmpty() || baseUrl.isEmpty());
-        }
-
 
         QUrl getFullUrl() const {
             QUrl url = baseUrl;
             url.setPath(url.path() + "/" + fileName);
             return url;
         }
-
+    private:
+        explicit FileData() {};
+        friend class S3BucketLister;
 
     };
 
@@ -71,15 +65,11 @@ private:
 };
 
 inline QDebug& operator<<(QDebug &debug, const S3BucketLister::FileData &data) {
-    if (data.isValid()) {
-        debug.nospace() << "FileData(base=" << data.baseUrl
-                        << ", fileName=" << data.fileName
-                        << ", lastModified=" << data.lastModified.toString(Qt::ISODate)
-                        << ", size=" << data.size
-                        << ")";
-    } else {
-        debug.nospace() << "FileData(invalid)";
-    }
+    debug.nospace() << "FileData(base=" << data.baseUrl
+                    << ", fileName=" << data.fileName
+                    << ", lastModified=" << data.lastModified.toString(Qt::ISODate)
+                    << ", size=" << data.size
+                    << ")";
 
     return debug.space();
 }

@@ -83,7 +83,7 @@ class DownloadListDialog : public QDialog
 public:
     explicit DownloadListDialog(QWidget *parent = nullptr);
 
-    S3BucketLister::FileData selectedFile() const;
+    std::optional<S3BucketLister::FileData> selectedFile() const;
 
     ~DownloadListDialog();
 public slots:

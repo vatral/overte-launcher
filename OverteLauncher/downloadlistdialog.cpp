@@ -145,7 +145,7 @@ DownloadListDialog::DownloadListDialog(QWidget *parent)
 
 }
 
-S3BucketLister::FileData DownloadListDialog::selectedFile() const
+std::optional<S3BucketLister::FileData> DownloadListDialog::selectedFile() const
 {
 
     auto proxy_idx = ui->downloadsTree->currentIndex();
@@ -168,7 +168,7 @@ S3BucketLister::FileData DownloadListDialog::selectedFile() const
 
 
 
-    return S3BucketLister::FileData();
+    return {};
 }
 
 DownloadListDialog::~DownloadListDialog()

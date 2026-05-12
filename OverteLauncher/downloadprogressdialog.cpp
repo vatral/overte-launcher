@@ -70,8 +70,8 @@ void DownloadProgressDialog::downloadFinished()
 
     // We set the timestamp on the file to the same it had at the download
     // archive. We later show this to the user in the versions list.
-    _outputFile.setFileTime(_data.lastModified, QFileDevice::FileBirthTime);
-    _outputFile.setFileTime(_data.lastModified, QFileDevice::FileModificationTime);
+    _outputFile.setFileTime(_data->lastModified, QFileDevice::FileBirthTime);
+    _outputFile.setFileTime(_data->lastModified, QFileDevice::FileModificationTime);
     _outputFile.close();
 
     QFile f(_filename);
