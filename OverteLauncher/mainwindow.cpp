@@ -49,7 +49,7 @@ void MainWindow::showDownloadListDialog()
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setModal(true);
 
-    connect(dlg, &QDialog::finished, this, [this, dlg](int result) {
+    connect(dlg, &QDialog::accepted, this, [this, dlg]() {
         auto selectedFile = dlg->selectedFile();
 
         QDir downloadDir = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
