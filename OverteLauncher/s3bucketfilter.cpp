@@ -18,15 +18,15 @@ QList<S3BucketLister::FileData> S3BucketFilter::filter(const QList<S3BucketListe
             continue;
         }
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX)
         if (!file.fileName.endsWith(".AppImage")) {
             continue;
         }
-#elif Q_OS_MACOS
+#elif defined(Q_OS_MACOS)
         if (!file.fileName.endsWith(".dmg")) {
             continue;
         }
-#elif Q_OS_WINDOWS
+#elif defined(Q_OS_WINDOWS)
         if (!file.fileName.endsWith(".exe")) {
             continue;
         }
