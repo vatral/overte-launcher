@@ -114,10 +114,10 @@ DownloadListDialog::DownloadListDialog(QWidget *parent)
     connect(&_bucketLister, &S3BucketLister::filesFound, this, &DownloadListDialog::bucketFilesFound);
 
 
-    ui->typesCombo->addItem("Release", ReleaseType::Release);
-    ui->typesCombo->addItem("Release candidate", ReleaseType::ReleaseCandidate);
-    ui->typesCombo->addItem("PR", ReleaseType::PR);
-    ui->typesCombo->addItem("Master build", ReleaseType::MasterBuild);
+    ui->typesCombo->addItem("Release", static_cast<int>(ReleaseType::Release));
+    ui->typesCombo->addItem("Release candidate", static_cast<int>(ReleaseType::ReleaseCandidate));
+    ui->typesCombo->addItem("PR", static_cast<int>(ReleaseType::PR));
+    ui->typesCombo->addItem("Master build", static_cast<int>(ReleaseType::MasterBuild));
     ui->typesCombo->setCurrentIndex(0);
 
     _sortModel.setSourceModel(&_model);
