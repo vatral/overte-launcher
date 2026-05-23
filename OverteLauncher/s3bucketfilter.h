@@ -2,7 +2,7 @@
 #define S3BUCKETFILTER_H
 
 #include "s3bucketlister.h"
-
+#include "enums.h"
 
 /**
  * @brief Filters the list of files from the S3 bucket to only include those relevant for the current platform.
@@ -10,13 +10,7 @@
 class S3BucketFilter
 {
 public:
-    enum Type {
-        Release,
-        ReleaseCandidate,
-        PR,
-        MasterBuild,
-        Any
-    };
+
 
     S3BucketFilter();
 
@@ -26,7 +20,7 @@ public:
      * @return The filtered list of files. If somehow the proper architecture cannot be determined,
      * the original list will be returned unfiltered.
      */
-    static QList<S3BucketLister::FileData> filter(const QList<S3BucketLister::FileData> &data, Type type = Any);
+    static QList<S3BucketLister::FileData> filter(const QList<S3BucketLister::FileData> &data, ReleaseType type = ReleaseType::Any);
 
 };
 

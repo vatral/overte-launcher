@@ -9,9 +9,7 @@ Q_LOGGING_CATEGORY(InstalledVersionLog, "InstalledVersion")
 
 InstalledVersion::InstalledVersion() {}
 
-bool InstalledVersion::launch(const QStringList arguments, bool startDetached) {
 
-}
 
 QList<InstalledVersion> InstalledVersion::findInstalledVersions() {
     auto versions = QList<InstalledVersion>();
@@ -54,4 +52,28 @@ QList<InstalledVersion> InstalledVersion::findInstalledVersions() {
     qCCritical(InstalledVersionLog) << "Current operating system not recognized, don't know how to detect installs";
     return versions;
 #endif
+}
+
+QJsonObject InstalledVersion::Metadata::toJson() const
+{
+    QJsonObject json;
+    json["description"] = getDescription();
+    json["date"] = getUploadDate().toSecsSinceEpoch();
+    json["releaseType"] = static_cast<int>(getReleaseType());
+    return json;
+}
+
+std::optional<InstalledVersion::Metadata> InstalledVersion::Metadata::fromJson(const QJsonObject &obj)
+{
+    if (!obj.contains("description") || !obj.contains("date") || !obj.contains("releaseType")) {
+        qCCritical(InstalledVersionLog) << "Failed to parse Metadata from JSON: missing fields";
+        return {};
+    }
+
+    Metadata metadata(obj["description"].toString(),
+                      QDateTime::fromSecsSinceEpoch(obj["date"].toInt()),
+                      static_cast<ReleaseType>(obj["releaseType"].toInt()));
+
+
+    return metadata;
 }

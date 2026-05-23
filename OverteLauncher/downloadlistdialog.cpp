@@ -6,7 +6,7 @@
 #include "ui_downloadlistdialog.h"
 #include "s3bucketfilter.h"
 #include "constants.h"
-
+#include "enums.h"
 
 
 
@@ -114,10 +114,10 @@ DownloadListDialog::DownloadListDialog(QWidget *parent)
     connect(&_bucketLister, &S3BucketLister::filesFound, this, &DownloadListDialog::bucketFilesFound);
 
 
-    ui->typesCombo->addItem("Release", S3BucketFilter::Type::Release);
-    ui->typesCombo->addItem("Release candidate", S3BucketFilter::Type::ReleaseCandidate);
-    ui->typesCombo->addItem("PR", S3BucketFilter::Type::PR);
-    ui->typesCombo->addItem("Master build", S3BucketFilter::Type::MasterBuild);
+    ui->typesCombo->addItem("Release", ReleaseType::Release);
+    ui->typesCombo->addItem("Release candidate", ReleaseType::ReleaseCandidate);
+    ui->typesCombo->addItem("PR", ReleaseType::PR);
+    ui->typesCombo->addItem("Master build", ReleaseType::MasterBuild);
     ui->typesCombo->setCurrentIndex(0);
 
     _sortModel.setSourceModel(&_model);
@@ -183,7 +183,7 @@ void DownloadListDialog::bucketFilesFound(const QList<S3BucketLister::FileData> 
 
 void DownloadListDialog::bucketListingDone()
 {
-    _filteredFiles = S3BucketFilter::filter(_files, static_cast<S3BucketFilter::Type>(ui->typesCombo->currentData().toInt()));
+    _filteredFiles = S3BucketFilter::filter(_files, static_cast<ReleaseType>(ui->typesCombo->currentData().toInt()));
     _model.setEntries(_filteredFiles);
 
     auto sel = ui->downloadsTree->selectionModel();

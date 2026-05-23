@@ -19,6 +19,7 @@ qt_add_executable(OverteLauncher
     installedlistmodel.h installedlistmodel.cpp
     installedversion.h installedversion.cpp
     programrunner.h programrunner.cpp
+    enums.h
 )
 
 qt_add_translations(

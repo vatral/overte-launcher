@@ -3,6 +3,11 @@
 #include <QDateTime>
 #include <QString>
 #include <QLoggingCategory>
+#include <QJsonDocument>
+#include <QJsonObject>
+
+#include "enums.h"
+#include "s3bucketlister.h"
 
 Q_DECLARE_LOGGING_CATEGORY(InstalledVersionLog)
 
@@ -14,6 +19,35 @@ Q_DECLARE_LOGGING_CATEGORY(InstalledVersionLog)
  */
 class InstalledVersion {
 public:
+
+    /**
+     * @brief Metadata regarding an installed version
+     *
+     * This contains extra metadata obtained at download time from the S3 bucket,
+     * and which may not be easily obtainable from the downloaded file on disk.
+     */
+    class Metadata {
+    public:
+        Metadata(const QString &description, const QDateTime &dateTime, ReleaseType type) :
+            _description(description), _uploadDate(dateTime), _releaseType(type) {}
+
+        Metadata(const S3BucketLister::FileData &fileData, ReleaseType type) :
+            _description(fileData.fileName), _uploadDate(fileData.lastModified), _releaseType(type) {}
+
+        const QString &getDescription() const { return _description; }
+        const QDateTime &getUploadDate() const { return _uploadDate; }
+        const ReleaseType &getReleaseType() const { return _releaseType; }
+
+        QJsonObject toJson() const;
+        static std::optional<Metadata> fromJson(const QJsonObject &obj);
+
+    private:
+        QString _description;
+        QDateTime _uploadDate;
+        ReleaseType _releaseType;
+
+        friend class InstalledVersion;
+    };
 
 
     /**
@@ -43,12 +77,6 @@ public:
     const QString &getFullBinaryPath() const {
         return _fullBinaryPath;
     }
-
-    /**
-     * @brief Launch this version of Overte.
-     * @return
-     */
-    bool launch(const QStringList arguments = QStringList(), bool startDetached = false);
 
     /**
      * @brief Find all the installed versions of Overte on this system.

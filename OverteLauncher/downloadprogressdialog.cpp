@@ -36,6 +36,8 @@ void DownloadProgressDialog::startDownload(const S3BucketLister::FileData &data,
         QMessageBox::critical(this, "Error", "Failed to open output file: " + _outputFile.errorString());
         close();
         return;
+
+
     }
 
 }

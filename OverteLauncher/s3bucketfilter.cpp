@@ -2,12 +2,12 @@
 
 #include "s3bucketfilter.h"
 #include "s3bucketlister.h"
-
+#include "enums.h"
 
 S3BucketFilter::S3BucketFilter() {}
 
 
-QList<S3BucketLister::FileData> S3BucketFilter::filter(const QList<S3BucketLister::FileData> &data, Type type)
+QList<S3BucketLister::FileData> S3BucketFilter::filter(const QList<S3BucketLister::FileData> &data, ReleaseType type)
 {
     QList<S3BucketLister::FileData> filteredFiles;
     QString arch = QSysInfo::currentCpuArchitecture();
@@ -32,27 +32,27 @@ QList<S3BucketLister::FileData> S3BucketFilter::filter(const QList<S3BucketListe
         }
 #endif
         switch(type) {
-            case Release:
+            case ReleaseType::Release:
                 if (!file.fileName.contains("/release/")) {
                     continue;
                 }
                 break;
-            case ReleaseCandidate:
+            case ReleaseType::ReleaseCandidate:
                 if (!file.fileName.contains("/release-candidate/")) {
                     continue;
                 }
                 break;
-            case PR:
+            case ReleaseType::PR:
                 if (!file.fileName.contains("/PR")) {
                     continue;
                 }
                 break;
-            case MasterBuild:
+            case ReleaseType::MasterBuild:
                 if (!file.fileName.contains("/master")) {
                     continue;
                 }
                 break;
-            case Any:
+            case ReleaseType::Any:
                 break;
         }
 
