@@ -11,8 +11,18 @@ class S3BucketFilter
 {
 public:
 
+    enum class OperatingSystem {
+        Linux,
+        MacOS,
+        Windows,
+        Auto
+    };
 
-    S3BucketFilter();
+    explicit S3BucketFilter();
+
+    void setOS(OperatingSystem os);
+
+    OperatingSystem getOS() const { return _os; }
 
     /**
      * @brief Filters the given list of files to only include those relevant for the current platform.
@@ -20,8 +30,10 @@ public:
      * @return The filtered list of files. If somehow the proper architecture cannot be determined,
      * the original list will be returned unfiltered.
      */
-    static QList<S3BucketLister::FileData> filter(const QList<S3BucketLister::FileData> &data, ReleaseType type = ReleaseType::Any);
+    QList<S3BucketLister::FileData> filter(const QList<S3BucketLister::FileData> &data, ReleaseType type = ReleaseType::Any);
 
+private:
+    OperatingSystem _os = OperatingSystem::Auto;
 };
 
 #endif // S3BUCKETFILTER_H

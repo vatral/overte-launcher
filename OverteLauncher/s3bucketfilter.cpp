@@ -4,8 +4,27 @@
 #include "s3bucketlister.h"
 #include "enums.h"
 
-S3BucketFilter::S3BucketFilter() {}
+S3BucketFilter::S3BucketFilter() {
+    setOS(OperatingSystem::Auto);
+}
 
+
+void S3BucketFilter::setOS(OperatingSystem os)
+{
+    _os = os;
+
+    if (_os == OperatingSystem::Auto) {
+#if defined(Q_OS_LINUX)
+        _os = OperatingSystem::Linux;
+#elif defined(Q_OS_MACOS)
+        _os = OperatingSystem::MacOS;
+#elif defined(Q_OS_WINDOWS)
+        _os = OperatingSystem::Windows;
+#else
+    #error "Building on unknown OS, fix me!"
+#endif
+    }
+}
 
 QList<S3BucketLister::FileData> S3BucketFilter::filter(const QList<S3BucketLister::FileData> &data, ReleaseType type)
 {
@@ -18,19 +37,27 @@ QList<S3BucketLister::FileData> S3BucketFilter::filter(const QList<S3BucketListe
             continue;
         }
 
-#if defined(Q_OS_LINUX)
-        if (!file.fileName.endsWith(".AppImage")) {
-            continue;
+        switch(_os) {
+            case OperatingSystem::Linux:
+                if (!file.fileName.endsWith(".AppImage")) {
+                    continue;
+                }
+                break;
+            case OperatingSystem::MacOS:
+                if (!file.fileName.endsWith(".dmg")) {
+                    continue;
+                }
+                break;
+            case OperatingSystem::Windows:
+                if (!file.fileName.endsWith(".exe")) {
+                    continue;
+                }
+                break;
+            case OperatingSystem::Auto:
+                qCritical() << "Auto value should never make it here, fix me!";
+                break;
         }
-#elif defined(Q_OS_MACOS)
-        if (!file.fileName.endsWith(".dmg")) {
-            continue;
-        }
-#elif defined(Q_OS_WINDOWS)
-        if (!file.fileName.endsWith(".exe")) {
-            continue;
-        }
-#endif
+
         switch(type) {
             case ReleaseType::Release:
                 if (!file.fileName.contains("/release/")) {

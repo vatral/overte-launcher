@@ -178,12 +178,12 @@ DownloadListDialog::~DownloadListDialog()
 
 void DownloadListDialog::bucketFilesFound(const QList<S3BucketLister::FileData> &files)
 {
-    _files.append(S3BucketFilter::filter(files));
+    _files.append(_filter.filter(files));
 }
 
 void DownloadListDialog::bucketListingDone()
 {
-    _filteredFiles = S3BucketFilter::filter(_files, static_cast<ReleaseType>(ui->typesCombo->currentData().toInt()));
+    _filteredFiles = _filter.filter(_files, static_cast<ReleaseType>(ui->typesCombo->currentData().toInt()));
     _model.setEntries(_filteredFiles);
 
     auto sel = ui->downloadsTree->selectionModel();

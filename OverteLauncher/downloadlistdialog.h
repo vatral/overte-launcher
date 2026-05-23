@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QModelIndex>
 #include <QSortFilterProxyModel>
-
+#include "s3bucketfilter.h"
 #include "s3bucketlister.h"
 
 class DownloadListModel : public QAbstractTableModel {
@@ -100,6 +100,7 @@ private:
     QList<S3BucketLister::FileData> _filteredFiles; // The subset of files the user chose to see with the combobox
     DownloadListModel _model;
     DownloadSortProxyModel _sortModel;
+    S3BucketFilter _filter;
 };
 
 #endif // DOWNLOADLISTDIALOG_H
