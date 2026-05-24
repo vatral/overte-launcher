@@ -33,15 +33,17 @@ QList<S3BucketLister::FileData> S3BucketFilter::filter(const QList<S3BucketListe
 
     for (const auto &file : data) {
 
-        if (!file.fileName.contains(arch)) {
-            continue;
-        }
-
         switch(_os) {
             case OperatingSystem::Linux:
                 if (!file.fileName.endsWith(".AppImage")) {
                     continue;
                 }
+
+                if (!file.fileName.contains(arch)) {
+//                    qInfo() << "Skipping file" << file.fileName << "because it does not contain architecture" << arch;
+                    continue;
+                }
+
                 break;
             case OperatingSystem::MacOS:
                 if (!file.fileName.endsWith(".dmg")) {

@@ -13,11 +13,15 @@ qt_standard_project_setup()
 include_directories("${CMAKE_SOURCE_DIR}/..")
 
 qt_add_executable(ManifestDownloaderTest
-    tst_manifestdownloadertest.cpp ../s3bucketlister.cpp
+    tst_manifestdownloadertest.cpp ../s3bucketlister.cpp ../s3bucketfilter.cpp
 )
 
+qt_add_executable(FilterTest
+    tst_filtertest.cpp ../s3bucketlister.cpp ../s3bucketfilter.cpp
+)
 
 add_test(NAME ManifestDownloaderTest COMMAND ManifestDownloaderTest)
+add_test(NAME FilterTest COMMAND FilterTest)
 
 
 set_target_properties(ManifestDownloaderTest PROPERTIES
@@ -25,6 +29,18 @@ set_target_properties(ManifestDownloaderTest PROPERTIES
     WIN32_EXECUTABLE FALSE
 )
 
+
+set_target_properties(FilterTest PROPERTIES
+    MACOSX_BUNDLE FALSE
+    WIN32_EXECUTABLE FALSE
+)
+
 target_link_libraries(ManifestDownloaderTest
     PRIVATE Qt6::Test Qt6::Network Qt6::Xml
 )
+
+
+target_link_libraries(FilterTest
+    PRIVATE Qt6::Test Qt6::Network Qt6::Xml
+)
+

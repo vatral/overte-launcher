@@ -3,6 +3,8 @@
 
 
 #include "../s3bucketlister.h"
+#include "../s3bucketfilter.h"
+
 
 
 
@@ -71,6 +73,7 @@ void ManifestDownloaderTest::test_listBucket() {
     QVERIFY(spyFiles.count() > 0 );
 
 }
+
 
 QTEST_MAIN(ManifestDownloaderTest)
 
