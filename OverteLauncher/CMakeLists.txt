@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(OverteLauncher LANGUAGES CXX)
+project(OverteLauncher LANGUAGES CXX VERSION 0.1)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets LinguistTools Network Xml)
 
@@ -54,3 +54,12 @@ qt_generate_deploy_app_script(
 )
 install(SCRIPT ${deploy_script})
 add_subdirectory(OverteLauncherTests)
+
+
+set(CPACK_PACKAGE_NAME "Overte Launcher")
+set(CPACK_PACKAGE_VENDOR "Overte e.V.")
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(CPACK_GENERATOR "WIX")
+set(CPACK_WIX_UPGRADE_GUID "1413e850-edb5-4f98-bfc1-5417f322cc4f")
+include(CPack)
+
