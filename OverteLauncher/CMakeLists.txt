@@ -60,6 +60,10 @@ set(CPACK_PACKAGE_NAME "Overte Launcher")
 set(CPACK_PACKAGE_VENDOR "Overte e.V.")
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 set(CPACK_GENERATOR "WIX")
+
+# Required fo modern WiX versions, or it'll fail with being unable to
+# find the WiX candle executable (executable doesn't exist in later versions)
+set(CPACK_WIX_VERSION 4)
 set(CPACK_WIX_UPGRADE_GUID "1413e850-edb5-4f98-bfc1-5417f322cc4f")
 include(CPack)
 
