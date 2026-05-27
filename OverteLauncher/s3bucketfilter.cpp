@@ -89,5 +89,5 @@ QList<S3BucketLister::FileData> S3BucketFilter::filter(const QList<S3BucketListe
         filteredFiles.append(file);
     }
 
-    return std::move(filteredFiles);
+    return filteredFiles;
 }

@@ -110,11 +110,11 @@ void MainWindow::loadChangelog()
     QNetworkReply *reply = _networkManager.get(req);
 
 
-    QObject::connect(reply, &QNetworkReply::downloadProgress, [this](qint64 bytesReceived, qint64 bytesTotal) {
+    QObject::connect(reply, &QNetworkReply::downloadProgress, [](qint64 bytesReceived, qint64 bytesTotal) {
         qCInfo(MainWindowLog) << "Downloading" << bytesReceived << "of" << bytesTotal;
     });
 
-    QObject::connect(reply, &QNetworkReply::errorOccurred, [this](QNetworkReply::NetworkError code){
+    QObject::connect(reply, &QNetworkReply::errorOccurred, [](QNetworkReply::NetworkError code){
         qCInfo(MainWindowLog) << "Error" << code;
     });
 
@@ -127,7 +127,7 @@ void MainWindow::loadChangelog()
     });
 
 
-    QObject::connect(reply, &QNetworkReply::sslErrors, [this](const QList<QSslError> &errors) {
+    QObject::connect(reply, &QNetworkReply::sslErrors, [](const QList<QSslError> &errors) {
         qCInfo(MainWindowLog) << "SSL Error" << errors;
     });
 }
@@ -135,7 +135,6 @@ void MainWindow::loadChangelog()
 std::optional<InstalledVersion> MainWindow::getSelectedVersion() const
 {
 
-    auto proxy_idx = ui->installedVersions->currentIndex();
     auto *proxy = qobject_cast<QSortFilterProxyModel*>(ui->installedVersions->model());
 
     if (!ui->installedVersions->selectionModel()->selectedIndexes().isEmpty()) {

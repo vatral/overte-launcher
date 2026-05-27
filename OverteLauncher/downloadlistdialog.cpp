@@ -148,7 +148,6 @@ DownloadListDialog::DownloadListDialog(QWidget *parent)
 std::optional<S3BucketLister::FileData> DownloadListDialog::selectedFile() const
 {
 
-    auto proxy_idx = ui->downloadsTree->currentIndex();
     auto *proxy = qobject_cast<QSortFilterProxyModel*>(ui->downloadsTree->model());
 
     if (!ui->downloadsTree->selectionModel()->selectedIndexes().isEmpty()) {
@@ -201,7 +200,7 @@ void DownloadListDialog::bucketListingDone()
 
 void DownloadListDialog::bucketErrorOccurred(const QString &error)
 {
-
+    qWarning() << "Bucket error:" << error;
 }
 
 void DownloadListDialog::downloadSelectionChanged()

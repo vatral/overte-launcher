@@ -33,12 +33,27 @@ qt_add_resources(
     FILES "images/logo_white.svg" "images/logo_black.svg"
 )
 
+
+# Set up strict compiler warnings for all supported compilers
+add_library(strict_warnings INTERFACE)
+target_compile_options(strict_warnings INTERFACE
+  "$<$<COMPILE_LANG_AND_ID:C,GNU,Clang,AppleClang>:-Wall;-Wextra;-Wpedantic>"
+  "$<$<COMPILE_LANG_AND_ID:CXX,GNU,Clang,AppleClang>:-Wall;-Wextra;-Wpedantic>"
+  "$<$<COMPILE_LANG_AND_ID:C,MSVC>:/W4>"
+  "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/W4>"
+)
+
+
+set_property(TARGET OverteLauncher PROPERTY COMPILE_WARNING_AS_ERROR ON)
+
+
 target_link_libraries(OverteLauncher
     PRIVATE
         Qt::Core
         Qt::Widgets
         Qt::Network
         Qt::Xml
+        strict_warnings
 )
 
 install(TARGETS OverteLauncher

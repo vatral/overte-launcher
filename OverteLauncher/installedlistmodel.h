@@ -35,11 +35,11 @@ public:
         return _installedVersions;
     }
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override {
+    int rowCount([[maybe_unused]]const QModelIndex &parent = QModelIndex()) const override {
         return _installedVersions.size();
     }
 
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override {
+    int columnCount([[maybe_unused]]const QModelIndex &parent = QModelIndex()) const override {
         return Column::ColumnCount;
     }
 

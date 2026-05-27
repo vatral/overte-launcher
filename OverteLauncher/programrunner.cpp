@@ -22,7 +22,7 @@ ProgramRunner::ProgramRunner(QObject *parent)
 bool ProgramRunner::runProgram(const QString &path, const QStringList &arguments, bool startDetached) {
     qCInfo(ProgramRunnerLog) << "Launching" << path << "with arguments" << arguments;
 
-    bool result;
+    bool result = false;
 
 
     if (startDetached) {
@@ -38,13 +38,14 @@ bool ProgramRunner::runProgram(const QString &path, const QStringList &arguments
     _process.setProcessEnvironment(env);
 
     if (startDetached) {
-        auto result = _process.startDetached(path, arguments);
+        result = _process.startDetached(path, arguments);
         if (!result) {
             qCCritical(ProgramRunnerLog) << "Failed to launch" << path;
             return false;
         }
         return true;
     } else {
+
         _process.start(path, arguments);
         //        if (!process.) {
         //          qCCritical(InstalledVersionLog) << "Failed to launch" << getDescription();

@@ -31,11 +31,11 @@ public:
         return _files;
     }
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override {
+    int rowCount([[maybe_unused]]const QModelIndex &parent = QModelIndex()) const override {
         return _files.size();
     }
 
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override {
+    int columnCount([[maybe_unused]]const QModelIndex &parent = QModelIndex()) const override {
         return Column::ColumnCount;
     }
 
