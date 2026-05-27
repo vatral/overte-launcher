@@ -6,7 +6,7 @@ on:
 
 env:
   BUILD_TYPE: Release
-  QT_VERSION: "6.8.3"
+  QT_VERSION: "6.10.*"
 
 jobs:
   build:
