@@ -14,11 +14,11 @@ DownloadProgressDialog::DownloadProgressDialog(QWidget *parent)
     ui->setupUi(this);
 }
 
-void DownloadProgressDialog::startDownload(const S3BucketLister::FileData &data, const QString &filePath)
+void DownloadProgressDialog::startDownload(const S3BucketLister::FileData &fileData, const QString &filePath)
 {
-    QNetworkRequest req(data.getFullUrl());
+    QNetworkRequest req(fileData.getFullUrl());
 
-    qCInfo(DownloadProgressDialogLog) << "Loading from" << data.getFullUrl() << "; expecting" << data.size << "bytes";
+    qCInfo(DownloadProgressDialogLog) << "Loading from" << fileData.getFullUrl() << "; expecting" << fileData.size << "bytes";
 
 
     QNetworkReply *reply = _networkManager.get(req);
@@ -31,7 +31,7 @@ void DownloadProgressDialog::startDownload(const S3BucketLister::FileData &data,
     _filename = filePath;
     _outputFile.setFileName(filePath + ".part");
     if (!_outputFile.open(QIODevice::WriteOnly, QFileDevice::ExeOwner | QFileDevice::ReadOwner | QFileDevice::WriteOwner)) {
-        _data = data;
+        _data = fileData;
         qCCritical(DownloadProgressDialogLog) << "Failed to open output file" << filePath << ":" << _outputFile.errorString();
         QMessageBox::critical(this, "Error", "Failed to open output file: " + _outputFile.errorString());
         close();

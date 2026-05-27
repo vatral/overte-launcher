@@ -64,11 +64,11 @@ void MainWindow::showDownloadListDialog()
         qInfo() << "Downloading into: " << path;
 
 
-        auto dlg = new DownloadProgressDialog(this);
-        dlg->setAttribute(Qt::WA_DeleteOnClose);
-        dlg->setModal(true);
-        dlg->show();
-        dlg->startDownload(selectedFile.value(), path);
+        auto dlgProgress = new DownloadProgressDialog(this);
+        dlgProgress->setAttribute(Qt::WA_DeleteOnClose);
+        dlgProgress->setModal(true);
+        dlgProgress->show();
+        dlgProgress->startDownload(selectedFile.value(), path);
 
     });
 

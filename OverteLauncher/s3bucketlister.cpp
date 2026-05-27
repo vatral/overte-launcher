@@ -90,8 +90,8 @@ void S3BucketLister::networkRequestFinished()
         url.setQuery(query);
         QNetworkRequest req(url);
 
-        QNetworkReply *reply = _networkManager.get(req);
-        QObject::connect(reply, &QNetworkReply::finished, this,  &S3BucketLister::networkRequestFinished);
+        QNetworkReply *nextListingReply = _networkManager.get(req);
+        QObject::connect(nextListingReply, &QNetworkReply::finished, this,  &S3BucketLister::networkRequestFinished);
 
     } else {
         emit listingDone();
